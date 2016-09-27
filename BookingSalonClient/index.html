@@ -1,0 +1,453 @@
+﻿<!DOCTYPE html>
+<html ng-app="mainModule">
+
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
+    <script src="js/jquery-1.12.3.min.js"></script>
+
+    <script src="alertify/lib/alertify.min.js"></script>
+    <link rel="stylesheet" href="alertify/themes/alertify.core.css" />
+    <link rel="stylesheet" href="alertify/themes/alertify.default.css" id="toggleCSS" />
+
+    <meta charset='utf-8' />
+    <link href='js/jquery-ui.css' rel='stylesheet' />
+    <link rel='stylesheet' href='lib/cupertino/jquery-ui.min.css' />
+    <link href='default.css' rel='stylesheet' />
+    <link href='js/fullcalendar.css' rel='stylesheet' />
+    <link href='js/fullcalendar.print.css' rel='stylesheet' media='print' />
+
+    <script src='lib/moment.min.js'></script>
+    <script src='lib/jquery.min.js'></script>
+    <script src='js/fullcalendar.min.js'></script>
+    <script src='js/fullcalendar.js'></script>
+    <script src='js/notify.js'></script>
+    <script src='js/jquery-ui.js'></script>
+    <script src='js/jquery-ui.min.js'></script>
+    <script src="js/js.cookie.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.css">
+
+    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.js"></script>
+    <!--Setup the page's title and icons.-->
+    <title>Barbarossa Hair Salon</title>
+    <link rel="icon" href="images/icon.png">
+    <style>
+        /* define the website's background */
+        .content {
+            position: fixed;
+            top: 0;
+            z-index: -1;
+            margin-left: 0px;
+            margin-right: 0px;
+            content: "";
+            left: 0;
+            right: 0;
+            display: block;
+            background-image: url("images/cover_image_5.jpg");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            width: 100%;
+            height: 100%;
+            -webkit-filter: blur(5px);
+            -moz-filter: blur(5px);
+            -o-filter: blur(5px);
+            -ms-filter: blur(5px);
+            filter: blur(5px);
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+    </style>
+
+    <script>
+        //Init global vars.
+        var chosenServiceDuration = 30;
+        var userFacebookId = 0;
+        var startWeekDate;
+        var endWeekDate;
+        var slotDuration = '00:30:00';
+        var firstClick = 1;
+        var chosenServiceID = 0;
+        var serverAddress = 'http://localhost:8080/wix_booking_server_war/';
+
+        $(document).ready(function () {
+
+            //Setup services table
+            var table = $('#servicesTable').DataTable({
+                "ajax": serverAddress + 'services',
+                "bFilter": false,
+                "bPaginate": false,
+                "bInfo": false,
+                "columnDefs": [{
+                    "className": "dt-center",
+                    "targets": [0, 1, 2]
+                }],
+                columns: [{
+                    data: 'serviceName'
+                }, {
+                    data: 'serviceCost'
+                }, {
+                    data: 'serviceDuration'
+                }, {
+                    data: 'serviceDescription'
+                }]
+            });
+
+            //Make the table's top section white.
+            $("#servicesTable").find('th').css('background-color', 'white');
+
+            //Set on click action for selecting a service.
+            $('#servicesTable tbody').on('click', 'tr', function() {
+
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                } else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+
+                    chosenServiceID = table.row(this).data().serviceID;
+                    updateCalendarWithNewTimeSlot(table.row(this).data().serviceDuration)
+                }
+            });
+
+            $('#button').click(function() {
+                table.row('.selected').remove().draw(false);
+            });
+
+        });
+
+        //The main calendar setup function.
+        function setUpCalendar() {
+            $('#calendar').fullCalendar({
+                theme: true,
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: ''
+                },
+                //Update the week's starting and ending dates each time
+                // the user selects a new dates range.
+                viewRender: function(view, element) {
+                    startWeekDate = view.start._d;
+
+                    endWeekDate = view.end._d;
+
+                },
+                defaultView: 'agendaWeek',
+                contentHeight: 'auto',
+                selectable: true,
+                slotDuration: slotDuration,
+                displayEventTime: false,
+                eventOverlap: false,
+                timezone: 'local',
+                selectHelper: false,
+                //On click event for choosing an appointment.
+                select: function(start, end) {
+
+                    var startAppointment = start._d.getTime();
+                    var endAppointment = end._d.getTime();
+
+                    //Check whether the selected timeslot is valid.
+                    var diff = Math.floor((endAppointment - startAppointment) / 60000);
+                    if (diff > chosenServiceDuration) {
+                        alertify.error("Chosen slot is too long - please select a single time slot.");
+                        $('#calendar').fullCalendar('unselect');
+                        return;
+                    }
+
+                    //time slot is OK - prompt the user with an "are you sure" dialog.
+                    var date = new Date(startAppointment);
+                    //Adjust minutes, if needed.
+                    var minutes = date.getMinutes();
+                    if (minutes == 0)
+                        minutes = "00";
+
+                    //Show the popup.
+                    alertify.confirm("You are about to make an appoinment for " + date.getDate() + "/" +
+                        (date.getMonth() + 1) + "/" +
+                        date.getFullYear() + ", at " +
+                        date.getHours() + ":" +
+                        minutes + ".</br>Are you sure?",
+                        function(e) {
+                            if (e) {
+                                //User pressed 'ok' - make an appointment.
+
+                                function callback(respText) {
+                                    console.log(respText);
+                                }
+                                //Send request to the server.
+                                var ajax = $.ajax({
+                                    type: 'GET',
+                                    url: serverAddress + 'set_app',
+                                    data: {
+                                        start: startAppointment,
+                                        end: endAppointment,
+                                        user_facebook_id: userFacebookId,
+                                        service_id: chosenServiceID
+                                    }
+                                });
+                                ajax.complete(function(jqXHR) {
+
+                                    if (jqXHR.readyState === 4) {
+
+                                        if (jqXHR.responseText == "yes") {
+                                            //The server has made the appointment.
+                                            document.getElementById("completeMsg").innerHTML =
+                                                "Your appointment for  " + date.getDate() + "/" +
+                                                (date.getMonth() + 1) + "/" +
+                                                date.getFullYear() + ", at " +
+                                                date.getHours() + ":" +
+                                                minutes + " is booked."
+
+                                            document.getElementById("topContentDiv").style.display = "none";
+                                            document.getElementById("completeMsgDiv").style.display = "block";
+                                            $("#calendar").css({
+                                                "visibility": "hidden"
+                                            });
+                                        } else {
+                                            //The chosen timeslot is taken. Alert the user.
+                                            alertify.error("Chosen slot is taken, please select a different one.");
+                                        }
+                                        $('#calendar').fullCalendar('destroy');
+                                        setUpCalendar();
+                                    } else
+                                        //Something went wrong contacting the server.
+                                        alertify.error("There has been an error processing your request.<br>Please try again.");
+
+                                });
+                            }
+                        });
+
+                    $('#calendar').fullCalendar('unselect');
+                },
+                editable: false,
+                eventLimit: false, // allow "more" link when too many events
+                //Fetch events(appointments) from the server.
+                events: {
+                    url: serverAddress + 'get_dates',
+                    type: 'POST',
+                    data: {
+                        start: startWeekDate,
+                        end: startWeekDate
+                    },
+                    error: function() {
+                        alert('there was an error while fetching events!');
+                    },
+                }
+            });
+        }
+    </script>
+
+</head>
+
+<body>
+
+    <script>
+        //Called when the user's facebook status has changed.
+        function statusChangeCallback(response) {
+            console.log('statusChangeCallback');
+            console.log(response);
+            if (response.status === 'connected') {
+                userLoggedIn();
+                getUserFacebookDetails();
+            } else {
+                document.getElementById("logindisplay").style.display = "block";
+            }
+
+        }
+
+        function checkLoginState() {
+            FB.getLoginStatus(function(response) {
+                statusChangeCallback(response);
+            });
+        }
+
+        function userLoggedIn() {
+            //User is logged in - hide the facebook button and show the services table.
+            var facebookLoginButton = document.getElementById("logindisplay");
+            facebookLoginButton.parentNode.removeChild(facebookLoginButton);
+            document.getElementById("mainTopDiv").style.display = "block";
+        }
+
+        function setUserInfo(facebookID, userName) {
+            userFacebookId = facebookID;
+            var titleSelect = document.getElementById("titleSelect").innerHTML = "Hi " + userName.substr(0, userName.indexOf(' ')) + ", please <b><u>select</b></u> one of our luxurious services -";
+        }
+
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: '554745728031866',
+                cookie: true, // enable cookies to allow the server to access
+                // the session
+                xfbml: true, // parse social plugins on this page
+                version: 'v2.5' // use graph api version 2.5
+            });
+
+            //Check if cookies are set - if they are, abort the facebook login.
+            if (Cookies.get('dataFromFacebookSet') != 1) {
+                FB.getLoginStatus(function(response) {
+                    statusChangeCallback(response);
+                });
+            } else {
+                setUserInfo(Cookies.get('userFacebookId'), Cookies.get('userName'))
+                userLoggedIn();
+            }
+        };
+
+        // Load the SDK asynchronously
+        (function(d, s, id) {
+
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://connect.facebook.net/en_US/all.js"
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        //Get the user's basic details and register him in the server.
+        function getUserFacebookDetails() {
+
+            FB.api('/me?fields=name,email,birthday', function(response) {
+
+                setUserInfo(response.id, response.name);
+                //Set cookies.
+                Cookies.set('userFacebookId', response.id);
+                Cookies.set('userName', response.name);
+                Cookies.set('dataFromFacebookSet', 1);
+
+                //Attempt to register the user in the server.
+                var registerRequest = $.ajax({
+                    type: 'GET',
+                    url: serverAddress + 'register',
+                    data: {
+                        name: response.name,
+                        facebook_id: response.id,
+                        email: response.email
+                    }
+                });
+                registerRequest.complete(function(jqXHR) {
+                    console.log(jqXHR);
+                    if (jqXHR.readyState === 4) {
+                        if (jqXHR.responseText == "yes") {
+                            console.log("Success - User registered");
+                        } else {
+                            console.log("Error - User already registered");
+                        }
+                    } else
+                        alertify.error("There has been an error processing your request.<br>Please try again.");
+
+                });
+            });
+        }
+    </script>
+    <!--Show background image -->
+    <div class="content"></div>
+
+    <!--Show top part of the site -->
+    <div id="rectangle">
+        <!--Logo display -->
+        <img src="images/logo2.png" class="displayed" />
+        <!--Facebook login -->
+        <div id="logindisplay" hidden>
+            <span id="login">
+                <a href="#" onclick="fb_login();"><img id="facebookButton" src="images/facebooklogin.png" border="0" alt=""></a>
+            </span>
+        </div>
+        <!--Main top content - message and services table -->
+        <div id="mainTopDiv" hidden>
+            <div id="completeMsgDiv" style="width:350px;margin-left:auto;margin-right:auto" hidden>
+                <h2 id="completeMsg">Your booking is complete! </h2>
+                <a href="#" onclick="makeAnotherAppointment();"><img id="anotherAppointmentButton" src="images/go_back_button.png" border="0" alt=""></a>
+            </div>
+            <div id="topContentDiv">
+                <div id="titleDiv">
+                    <h2 id="titleSelect">Select one of our luxurious services - </h2>
+                </div>
+
+                <table id="servicesTable" class="display" cellspacing="0" width="90%">
+                    <thead>
+                        <tr>
+                            <th>Service Name</th>
+                            <th>Service Cost (₪)</th>
+                            <th>Service Duration (minutes)</th>
+                            <th>Service Description</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <!--Show the calendar -->
+    <div id='calendar' hidden></div>
+
+    <script>
+        //Facebook login functions.
+        (function() {
+            var e = document.createElement('script');
+            e.src = 'https://connect.facebook.net/en_US/all.js';
+            e.async = true;
+            document.getElementById('fb-root').appendChild(e);
+        }());
+
+        function fb_login() {
+            FB.login(function(response) {
+                statusChangeCallback(response);
+            }, {
+                scope: 'public_profile,email'
+            });
+        }
+
+        //User wants to set another appointment - hide the 'appointment done' message, and
+        // show regular content.
+        function makeAnotherAppointment() {
+            document.getElementById("topContentDiv").style.display = "block";
+            document.getElementById("completeMsgDiv").style.display = "none";
+            $("#calendar").css({
+                "visibility": "visible"
+            });
+        }
+
+        //Update the calendar with the new time slot.
+        function updateCalendarWithNewTimeSlot(newTimeSlot) {
+            chosenServiceDuration = newTimeSlot;
+            slotDuration = '00:' + chosenServiceDuration + ':00';
+            if (firstClick == 1) {
+                firstClick = 0;
+
+                //Setup the calendar and adjsut it's height(beneath the table).
+                $('#calendar').css('margin-top', $('#rectangle').outerHeight() + 50);
+                $("#calendar").fadeIn(500);
+                setUpCalendar();
+                scrollDownWithDelay(500);
+
+            } else {
+                //Destroy and re-create the calendar, with the new time slot adjusments.
+                $("#calendar").fadeOut(500);
+                setTimeout(
+                    function() {
+                        $('#calendar').fullCalendar('destroy');
+                        setUpCalendar();
+                        $("#calendar").fadeIn(500);
+                        scrollDownWithDelay(500);
+                    }, 400);
+
+            }
+
+        }
+        //Scroll down to the bottom of the screen.
+        function scrollDownWithDelay(delayTime) {
+            setTimeout(
+                function() {
+                    $('html, body').animate({
+                        scrollTop: $(document).height()
+                    }, 'slow');
+                }, delayTime);
+        }
+    </script>
+
+</body>
+
+</html>

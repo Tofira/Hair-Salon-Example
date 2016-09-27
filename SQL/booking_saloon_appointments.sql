@@ -1,0 +1,58 @@
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+--
+-- Host: 127.0.0.1    Database: booking_saloon
+-- ------------------------------------------------------
+-- Server version	5.7.11-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `appointments`
+--
+
+DROP TABLE IF EXISTS `appointments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `appointments` (
+  `idappointments` int(11) NOT NULL AUTO_INCREMENT,
+  `start_time` datetime NOT NULL,
+  `end_time` datetime NOT NULL,
+  `customer_facebook_id` varchar(45) NOT NULL,
+  `serviceID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idappointments`),
+  KEY `ttt` (`serviceID`),
+  KEY `appointments_to_users_idx` (`customer_facebook_id`),
+  CONSTRAINT `appointments_to_users` FOREIGN KEY (`customer_facebook_id`) REFERENCES `users` (`facebook_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `ttt` FOREIGN KEY (`serviceID`) REFERENCES `services` (`idservices`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `appointments`
+--
+
+LOCK TABLES `appointments` WRITE;
+/*!40000 ALTER TABLE `appointments` DISABLE KEYS */;
+INSERT INTO `appointments` VALUES (87,'2016-05-09 08:00:00','2016-05-09 08:20:00','1052310584842887',10),(88,'2016-05-08 08:00:00','2016-05-08 09:00:00','1052310584842887',8),(89,'2016-05-11 10:00:00','2016-05-11 10:20:00','1052310584842887',6),(90,'2016-05-10 11:20:00','2016-05-10 12:00:00','1052310584842887',9),(91,'2016-05-11 13:00:00','2016-05-11 14:00:00','1052310584842887',5),(92,'2016-05-09 13:00:00','2016-05-09 13:30:00','1052310584842887',4),(93,'2016-05-09 08:40:00','2016-05-09 09:20:00','1052310584842887',9),(94,'2016-05-11 08:30:00','2016-05-11 09:00:00','1052310584842887',7);
+/*!40000 ALTER TABLE `appointments` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-05-10 20:07:28

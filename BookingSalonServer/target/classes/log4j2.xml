@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="ERROR">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%-5level- %c{1} - %msg%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="storeLogger" level="ALL">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Root level="ALL">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

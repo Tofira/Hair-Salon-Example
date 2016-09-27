@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <meta charset='utf-8' />
+    <link rel='stylesheet' href='../lib/cupertino/jquery-ui.min.css' />
+    <link href='../fullcalendar.css' rel='stylesheet' />
+    <link href='../fullcalendar.print.css' rel='stylesheet' media='print' />
+    <script src='../lib/moment.min.js'></script>
+    <script src='../lib/jquery.min.js'></script>
+    <script src='../fullcalendar.min.js'></script>
+
+    <style>
+        .logTextArea {
+            width: 400px;
+            height: 250px;
+        }
+    </style>
+</head>
+
+<body ng-app="mainModule">
+
+    <p>Barber Shop</p>
+
+    <p>View available services</p>
+
+    <div ng-controller="mainController">
+        <h3>GET call with JSON response</h3>
+        <button ng-click="getCallJSON()">GET call</button><br />
+        <br />
+        <ul>
+            <li ng-repeat="x in returnedServices">
+                {{ x.serviceName  + ', ' + x.serviceDuration }}
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

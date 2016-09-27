@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Machine>MICKAEL-LENOVO-</Machine>
+    <WindowsUser>lenovo</WindowsUser>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetOsVersion>10.0</TargetOsVersion>
+    <TargetOsDescription>Windows 10.0</TargetOsDescription>
+    <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
+    <PackageArchitecture>neutral</PackageArchitecture>
+    <PackageIdentityName>2c701deb-8fb6-43ac-b02f-21b462584ec6</PackageIdentityName>
+    <IntermediateOutputPath>C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\bld\Debug\</IntermediateOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <AppXManifest Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\bin\Debug\AppxManifest.xml">
+      <PackagePath>AppxManifest.xml</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppXManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\index.html">
+      <PackagePath>index.html</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\images\LockScreenLogo.scale-200.png">
+      <PackagePath>images\LockScreenLogo.scale-200.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\images\SplashScreen.scale-200.png">
+      <PackagePath>images\SplashScreen.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\images\Square150x150Logo.scale-200.png">
+      <PackagePath>images\Square150x150Logo.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\images\Square44x44Logo.scale-200.png">
+      <PackagePath>images\Square44x44Logo.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\images\Square44x44Logo.targetsize-24_altform-unplated.png">
+      <PackagePath>images\Square44x44Logo.targetsize-24_altform-unplated.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\images\StoreLogo.png">
+      <PackagePath>images\StoreLogo.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\images\Wide310x150Logo.scale-200.png">
+      <PackagePath>images\Wide310x150Logo.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\lib\cupertino\images\ui-bg_diagonals-thick_90_eeeeee_40x40.png">
+      <PackagePath>lib\cupertino\images\ui-bg_diagonals-thick_90_eeeeee_40x40.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\lib\cupertino\images\ui-bg_flat_15_cd0a0a_40x100.png">
+      <PackagePath>lib\cupertino\images\ui-bg_flat_15_cd0a0a_40x100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\lib\cupertino\images\ui-bg_glass_100_e4f1fb_1x400.png">
+      <PackagePath>lib\cupertino\images\ui-bg_glass_100_e4f1fb_1x400.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\lib\cupertino\images\ui-bg_glass_50_3baae3_1x400.png">
+      <PackagePath>lib\cupertino\images\ui-bg_glass_50_3baae3_1x400.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\lib\cupertino\images\ui-bg_glass_80_d7ebf9_1x400.png">
+      <PackagePath>lib\cupertino\images\ui-bg_glass_80_d7ebf9_1x400.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\lib\cupertino\images\ui-bg_highlight-hard_100_f2f5f7_1x100.png">
+      <PackagePath>lib\cupertino\images\ui-bg_highlight-hard_100_f2f5f7_1x100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\lib\cupertino\images\ui-bg_highlight-hard_70_000000_1x100.png">
+      <PackagePath>lib\cupertino\images\ui-bg_highlight-hard_70_000000_1x100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\lib\cupertino\images\ui-bg_highlight-soft_100_deedf7_1x100.png">
+      <PackagePath>lib\cupertino\images\ui-bg_highlight-soft_100_deedf7_1x100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\lib\cupertino\images\ui-bg_highlight-soft_25_ffef8f_1x100.png">
+      <PackagePath>lib\cupertino\images\ui-bg_highlight-soft_25_ffef8f_1x100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\lib\cupertino\images\ui-icons_2694e8_256x240.png">
+      <PackagePath>lib\cupertino\images\ui-icons_2694e8_256x240.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\lib\cupertino\images\ui-icons_2e83ff_256x240.png">
+      <PackagePath>lib\cupertino\images\ui-icons_2e83ff_256x240.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\lib\cupertino\images\ui-icons_3d80b3_256x240.png">
+      <PackagePath>lib\cupertino\images\ui-icons_3d80b3_256x240.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\lib\cupertino\images\ui-icons_72a7cf_256x240.png">
+      <PackagePath>lib\cupertino\images\ui-icons_72a7cf_256x240.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\lib\cupertino\images\ui-icons_ffffff_256x240.png">
+      <PackagePath>lib\cupertino\images\ui-icons_ffffff_256x240.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\js\fullcalendar.css">
+      <PackagePath>js\fullcalendar.css</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\js\fullcalendar.min.css">
+      <PackagePath>js\fullcalendar.min.css</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\js\fullcalendar.print.css">
+      <PackagePath>js\fullcalendar.print.css</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\css\default.css">
+      <PackagePath>css\default.css</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\lib\cupertino\jquery-ui.min.css">
+      <PackagePath>lib\cupertino\jquery-ui.min.css</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\js\fullcalendar.js">
+      <PackagePath>js\fullcalendar.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\js\fullcalendar.min.js">
+      <PackagePath>js\fullcalendar.min.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\js\gcal.js">
+      <PackagePath>js\gcal.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\js\lang-all.js">
+      <PackagePath>js\lang-all.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\js\main.js">
+      <PackagePath>js\main.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\lib\jquery-ui.custom.min.js">
+      <PackagePath>lib\jquery-ui.custom.min.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\lib\jquery.min.js">
+      <PackagePath>lib\jquery.min.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\lib\moment.min.js">
+      <PackagePath>lib\moment.min.js</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\lib\cupertino\images\animated-overlay.gif">
+      <PackagePath>lib\cupertino\images\animated-overlay.gif</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lenovo\Desktop\Wix App\Client Side\App8\App8\bin\Debug\ReverseMap\resources.pri">
+      <PackagePath>resources.pri</PackagePath>
+    </AppxPackagedFile>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+</Project>
